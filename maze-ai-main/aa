@@ -1,0 +1,57 @@
+using System.Collections.Generic;
+using Stately;
+
+public class Solver
+{
+    public Maze Maze { get; set; }
+
+    public void Solve()
+    {
+        DepthFirstSearch(Maze.Root);
+    }
+
+    public bool DepthFirstSearch(Space crr)
+    {
+        crr.Visited = true;
+
+        if (crr.Exit)
+        {
+            crr.IsSolution = true;
+            return true;
+        }
+
+        if (VerifySpace(crr.Right))
+        {
+            crr.IsSolution = DepthFirstSearch(crr.Right);
+            if(crr.IsSolution)
+                return true;
+        }
+        if (VerifySpace(crr.Bottom))
+        {
+            crr.IsSolution = DepthFirstSearch(crr.Bottom);
+            if(crr.IsSolution)
+                return true;
+        }
+        if (VerifySpace(crr.Top))
+        {
+            crr.IsSolution = DepthFirstSearch(crr.Top);
+            if(crr.IsSolution)
+                return true;
+        }
+        if (VerifySpace(crr.Left))
+        {
+            crr.IsSolution = DepthFirstSearch(crr.Left);
+            if(crr.IsSolution)
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool VerifySpace(Space space)
+    {
+        if (space is not null && !space.Visited)
+            return true;
+        return false;
+    }
+}
