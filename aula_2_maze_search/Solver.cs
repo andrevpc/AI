@@ -231,7 +231,10 @@ public class Solver
 
     #region Dijkstra
 
-
+    public void Dijkstra()
+    {
+        
+    }
 
     #endregion
 
