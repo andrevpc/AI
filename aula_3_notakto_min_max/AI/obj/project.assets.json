@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\disrct\\Desktop\\André\\notakto-ai-main\\AI\\AI.csproj",
+      "projectUniqueName": "C:\\Users\\disrct\\Desktop\\André\\AI\\aula_3_notakto_min_max\\AI\\AI.csproj",
       "projectName": "AI",
-      "projectPath": "C:\\Users\\disrct\\Desktop\\André\\notakto-ai-main\\AI\\AI.csproj",
+      "projectPath": "C:\\Users\\disrct\\Desktop\\André\\AI\\aula_3_notakto_min_max\\AI\\AI.csproj",
       "packagesPath": "C:\\Users\\disrct\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\disrct\\Desktop\\André\\notakto-ai-main\\AI\\obj\\",
+      "outputPath": "C:\\Users\\disrct\\Desktop\\André\\AI\\aula_3_notakto_min_max\\AI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\disrct\\AppData\\Roaming\\NuGet\\NuGet.Config",

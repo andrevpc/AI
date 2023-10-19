@@ -5,30 +5,41 @@ using System.Linq;
 public static class FileFunction
 {
     public static int Player { get; set; }
-    public static void UpdateFile(string file, Notakto notakto)
+    public static bool IsFirst { get; set; }
+    public static void UpdateFile(Notakto notakto)
     {
-        string fileName;
+        string file;
 
         if (Player == 1)
-            fileName = "m1.txt";
+            file = "m1";
         else
-            fileName = "m2.txt";
+            file = "m2";
 
-        if (file == fileName.Replace(".txt", " last.txt"))
+        if(IsFirst)
         {
-            var content = File.ReadAllText(file); //ReadLine FirstOrDefault
+            File.WriteAllText($"{file}.txt", $"0 4");
+            notakto.Play(0, 4);
+            IsFirst = false;
+            return;
+        }
+
+        if (File.Exists($"{file} last.txt"))
+        {
+            var content = File.ReadAllText($"{file} last.txt"); //ReadLine FirstOrDefault
             var data = content
                 .Split(' ')
                 .Select(int.Parse)
                 .ToArray();
 
-            bool isFinished = notakto.NotaktoPlay(data[0], data[1]);
+            bool isFinished = notakto.Play(data[0], data[1]);
 
             System.Console.WriteLine(data[0]);
             System.Console.WriteLine(data[1]);
 
-            File.Delete(file);
-            File.WriteAllText(fileName, "TODO");
+            File.Delete($"{file} last.txt");
+
+            File.WriteAllText($"{file}.txt", "TODO");
+            // notakto.NotaktoPlay(0, 0);
         }
     }
 }
