@@ -2,7 +2,7 @@
 
 Node tree = new()
 {
-    State = new Notakto(int.Parse(args[1]))
+    State = new Othello()
 };
 int deep = 4;
 tree.Expand(deep);

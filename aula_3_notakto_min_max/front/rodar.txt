@@ -1,0 +1,9 @@
+Inside do myCode (already done!):
+dotnet build
+Get files from ./bin and copy it to ../front
+
+
+In different terminals:
+dotnet run
+./AI.exe m1 2
+./AI.exe m2 2

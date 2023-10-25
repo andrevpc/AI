@@ -9,7 +9,7 @@ public class Solver
     {
         // DepthFirstSearch();
 
-        // DepthFirstRecursiveSearchWithPath(Maze.Root);
+        DepthFirstRecursiveSearchWithPath(Maze.Root);
 
         // BreadthFirstSearch();
 
@@ -19,7 +19,7 @@ public class Solver
         // };
         // BreadthFirstRecursiveSearch(spaces);
 
-        BreadthFirstSearchWithPath();
+        // BreadthFirstSearchWithPath();
     }
 
     #region DepthFirstSearch
