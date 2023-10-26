@@ -67,14 +67,17 @@ public class Node
             };
 
             newNode.Expand(depth - 1);
-            
+
             Children.Add(newNode);
         }
 
         Expanded = true;
     }
-    public Node Play(ulong play)
+    public Node Play(int play)
         => Children.First(child => child.State.GetLast() == play);
+
+    public Node Play(ulong white, ulong black)
+        => Children.First(child => child.State.whiteInfo == white && child.State.blackInfo == black);
 
     public Node PlayBest()
         => Children.MaxBy(child => child.Evaluation);

@@ -48,7 +48,7 @@ public struct OthelloGame
         get
         {
             int index = i + j * 8;
-            return ((whiteInfo & (u << index)) > 0) ? 1 : 
+            return ((whiteInfo & (u << index)) > 0) ? 1 :
                    ((blackInfo & (u << index)) > 0) ? 2 : 0;
         }
     }

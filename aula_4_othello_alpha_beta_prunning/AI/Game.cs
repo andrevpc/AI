@@ -19,33 +19,36 @@ public static class Game
 
         if (IsFirst)
         {
-            File.WriteAllText($"{file}.txt", $"0 4");
-
-            Tree = Tree.Play(0, 4);
+            Tree = Tree.Play(20);
+            File.WriteAllText($"{file}.txt", Tree.State.ToString());
             Tree.Expand(Deep);
             IsFirst = false;
+            Tree.State.Print();
+            System.Console.WriteLine("\n\n");
         }
 
-        if (File.Exists($"{file} last.txt"))
+        if (File.Exists($"[OUTPUT]{file}.txt"))
         {
-            var content = File.ReadAllText($"{file} last.txt");
+            var content = File.ReadAllText($"[OUTPUT]{file}.txt");
             var data = content
                 .Split(' ')
-                .Select(int.Parse)
+                .Select(ulong.Parse)
                 .ToArray();
-            File.Delete($"{file} last.txt");
+            File.Delete($"[OUTPUT]{file}.txt");
 
-
-            Tree = Tree.Play(data[0], data[1]);
+            Tree.Expand(Deep);
+            Tree = Tree.Play(data[1], data[3]);
 
             Tree.Expand(Deep);
 
-            Tree.MinMax();
+            Tree.AlphaBeta();
             Tree = Tree.PlayBest();
             Tree.Expand(Deep);
 
-            var last = Tree.State.GetLast();
-            File.WriteAllText($"{file}.txt", $"{last.board} {last.position}");
+            var last = Tree.State.GetLastUlong();
+            File.WriteAllText($"{file}.txt", Tree.State.ToString());
+            Tree.State.Print();
+            System.Console.WriteLine("\n\n");
         }
     }
 }

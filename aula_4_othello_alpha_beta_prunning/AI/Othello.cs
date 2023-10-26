@@ -1,18 +1,37 @@
+using System.Runtime.InteropServices;
+
 namespace AI;
 
 public class Othello
 {
-    private ulong whiteInfo;
-    private ulong blackInfo;
-    private byte whiteCount;
-    private byte blackCount;
-    private byte whitePlays;
+    private const ulong u = 1;
+    public ulong whiteInfo;
+    public ulong blackInfo;
+    public byte whiteCount;
+    public byte blackCount;
+    public byte whitePlays;
     private int lastPlayIndex = 0;
-
+    public static Othello New()
+    {
+        return new Othello
+        {
+            whiteInfo = (u << 27) + (u << 36),
+            blackInfo = (u << 28) + (u << 35),
+            whiteCount = 2,
+            blackCount = 2,
+            whitePlays = 1
+        };
+    }
     public int GetLast()
         => lastPlayIndex;
 
-    public void Play(int playIndex) // TODO
+    public ulong GetLastUlong()
+    {
+        ulong u = 1;
+        var play = u << lastPlayIndex;
+        return play;
+    }
+    public void Play(int playIndex)
     {
         ulong u = 1;
         var play = u << playIndex;
@@ -34,33 +53,49 @@ public class Othello
     public bool Directions(int playIndex, int i, int j, ulong myColorInfo, ulong enemyColorInfo,
                            bool checkTop, bool checkBottom, bool checkLeft, bool checkRight)
     {
-        var lastIndex = playIndex + i * 8 + j;
+        var lastIndex = 0;
         int index;
         int myCount = 0;
         int enemyCount = 0;
-        ulong myTable;
-        ulong enemyTable;
-        for (int k = 2; k < 8; k++)
+        ulong myTable = myColorInfo;
+        ulong enemyTable = enemyColorInfo;
+        ulong u = 1;
+        ulong play;
+        for (int k = 1; k < 8; k++)
         {
             index = playIndex + i * 8 * k + j * k;
-            if (index > 64 || index < 0 ||
-                checkTop && lastIndex % 8 == 0 || checkBottom && lastIndex % 8 == 0 ||
-                checkLeft && lastIndex < 8 || checkRight && lastIndex > 55)
-                return false;
+            // TODO!!!!!
+            // if (index > 64 || index < 0 ||
+            //     checkTop && lastIndex % 8 == 0 || checkBottom && lastIndex % 8 == 0 ||
+            //     checkLeft && lastIndex < 8 || checkRight && lastIndex > 55)
+            //     return false;
 
             var checkMyColor = ((myColorInfo >> index) & 1) == 1;
             var checkEnemyColor = ((enemyColorInfo >> index) & 1) == 1;
             if (checkMyColor)
-                return true;
+            {
+                if (whitePlays == 1)
+                {
+                    whiteInfo = myTable;
+                    blackInfo = enemyTable;
+                }
+                else
+                {
+                    blackInfo = myTable;
+                    whiteInfo = enemyTable;
+                }
+                return false;
+            }
             else if (!checkEnemyColor && !checkMyColor)
                 return false;
             else
             {
                 myCount++;
                 enemyCount--;
-
+                play = u << index;
+                myTable |= play;
+                enemyTable ^= play;
             }
-
             lastIndex = index;
         }
         return false;
@@ -121,7 +156,7 @@ public class Othello
                     checkLeft && playIndex < 8 || checkRight && playIndex > 55)
                     continue;
 
-                checkColor = ((enemyColorInfo >> index) & 1) == 1;
+                checkColor = ((u << index) & enemyColorInfo) > 0;
                 if (checkColor)
                     if (direction(playIndex, i, j, myColorInfo, enemyColorInfo, checkTop, checkBottom, checkLeft, checkRight))
                         return true;
@@ -170,6 +205,8 @@ public class Othello
                 clone.Play(i);
 
                 children.Add(clone);
+                clone.Print();
+                System.Console.WriteLine("\n\n");
             }
         }
         return children;
@@ -185,4 +222,37 @@ public class Othello
             blackCount = blackCount,
             lastPlayIndex = lastPlayIndex
         };
+
+    public void Print()
+    {
+        for (int i = 0; i < 64; i++)
+        {
+            if (i % 8 == 0)
+                Console.WriteLine();
+
+            bool isWhite = ((whiteInfo >> i) & 1) > 0;
+            bool isBlack = ((blackInfo >> i) & 1) > 0;
+
+            if (isWhite)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(" 0 ");
+            }
+            else if (isBlack)
+            {
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(" 0 ");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("   ");
+            }
+
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.Write(" | ");
+        }
+    }
+    public override string ToString()
+        => $"{whitePlays} {whiteInfo} {whiteCount} {blackInfo} {blackCount}";
 }

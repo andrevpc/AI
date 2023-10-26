@@ -4,7 +4,8 @@ Node tree = new()
 {
     State = new Othello()
 };
-int deep = 4;
+int deep = 1;
+tree.State = Othello.New();
 tree.Expand(deep);
 
 Game.Player = args[0] == "m1" ? 1 : 2;
