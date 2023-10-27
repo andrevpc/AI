@@ -50,12 +50,10 @@ public class Othello
         lastPlayIndex = playIndex;
     }
 
-    public bool Directions(int playIndex, int i, int j, ulong myColorInfo, ulong enemyColorInfo,
-                           bool checkTop, bool checkBottom, bool checkLeft, bool checkRight)
+    public bool Directions(int playIndex, int i, int j, ulong myColorInfo, ulong enemyColorInfo)
     {
-        var lastIndex = 0;
         int index;
-        int myCount = 0;
+        int myCount = 0; //TODO
         int enemyCount = 0;
         ulong myTable = myColorInfo;
         ulong enemyTable = enemyColorInfo;
@@ -64,12 +62,8 @@ public class Othello
         for (int k = 1; k < 8; k++)
         {
             index = playIndex + i * 8 * k + j * k;
-            // TODO!!!!!
-            // if (index > 64 || index < 0 ||
-            //     checkTop && lastIndex % 8 == 0 || checkBottom && lastIndex % 8 == 0 ||
-            //     checkLeft && lastIndex < 8 || checkRight && lastIndex > 55)
-            //     return false;
-
+            if(!checkIndex(playIndex, i * k, j * k))
+                break;
             var checkMyColor = ((myColorInfo >> index) & 1) == 1;
             var checkEnemyColor = ((enemyColorInfo >> index) & 1) == 1;
             if (checkMyColor)
@@ -96,7 +90,6 @@ public class Othello
                 myTable |= play;
                 enemyTable ^= play;
             }
-            lastIndex = index;
         }
         return false;
     }
@@ -120,63 +113,50 @@ public class Othello
         return true;
     }
 
-    private bool checkAdjacent(int playIndex, byte isWhite, Func<int, int, int, ulong, ulong,
-                                 bool, bool, bool, bool, bool> direction)
+    private bool checkAdjacent(int playIndex, byte isWhite, Func<int, int, int, ulong, ulong, bool> direction)
     {
         ulong enemyColorInfo;
         ulong myColorInfo;
-        if (isWhite == 1)
-        {
-            myColorInfo = whiteInfo;
-            enemyColorInfo = blackInfo;
-        }
-        else
-        {
-            myColorInfo = blackInfo;
-            enemyColorInfo = whiteInfo;
-        }
 
-        bool checkLeft,
-             checkRight,
-             checkTop,
-             checkBottom,
-             checkColor;
+        bool checkColor;
         int index;
         for (int i = -1; i < 2; i++)
         {
-            checkLeft = i == -1;
-            checkRight = i == 1;
+            if (!checkIndexI(playIndex, i))
+                break;
             for (int j = -1; j < 2; j++)
             {
-                checkTop = j == -1;
-                checkBottom = j == 1;
+                if (isWhite == 1)
+                {
+                    myColorInfo = whiteInfo;
+                    enemyColorInfo = blackInfo;
+                }
+                else
+                {
+                    myColorInfo = blackInfo;
+                    enemyColorInfo = whiteInfo;
+                }
+                if (!checkIndexJ(playIndex, j))
+                    break;
                 index = playIndex + i * 8 + j;
-                if (index > 64 || index < 0 ||
-                    checkTop && playIndex % 8 == 0 || checkBottom && playIndex + 1 % 8 == 0 ||
-                    checkLeft && playIndex < 8 || checkRight && playIndex > 55)
-                    continue;
 
                 checkColor = ((u << index) & enemyColorInfo) > 0;
                 if (checkColor)
-                    if (direction(playIndex, i, j, myColorInfo, enemyColorInfo, checkTop, checkBottom, checkLeft, checkRight))
+                    if (direction(playIndex, i, j, myColorInfo, enemyColorInfo))
                         return true;
             }
         }
         return false;
     }
 
-    private bool checkDirections(int playIndex, int i, int j, ulong myColorInfo, ulong enemyColorInfo,
-                                 bool checkTop, bool checkBottom, bool checkLeft, bool checkRight)
+    private bool checkDirections(int playIndex, int i, int j, ulong myColorInfo, ulong enemyColorInfo)
     {
-        var lastIndex = playIndex + i * 8 + j;
         int index;
         for (int k = 2; k < 8; k++)
         {
             index = playIndex + i * 8 * k + j * k;
-            if (index > 64 || index < 0 ||
-                checkTop && lastIndex % 8 == 0 || checkBottom && lastIndex % 8 == 0 ||
-                checkLeft && lastIndex < 8 || checkRight && lastIndex > 55)
-                return false;
+            if(!checkIndex(playIndex, i * k, j * k))
+                break;
 
             var checkMyColor = ((myColorInfo >> index) & 1) == 1;
             var checkEnemyColor = ((enemyColorInfo >> index) & 1) == 1;
@@ -184,10 +164,32 @@ public class Othello
                 return true;
             else if (!checkEnemyColor && !checkMyColor)
                 return false;
-
-            lastIndex = index;
         }
         return false;
+    }
+
+    private bool checkIndex(int index, int i, int j)
+    {
+        if (!checkIndexI(index, i))
+            return false;
+        if (!checkIndexJ(index, j))
+            return false;
+        return true;
+    }
+
+    private bool checkIndexJ(int index, int j)
+    {
+        var x = index % 8 + j;
+        if (x < 0 || x > 7)
+            return false;
+        return true;
+    }
+    private bool checkIndexI(int index, int i)
+    {
+        var y = index / 8 + i;
+        if (y < 0 || y > 7)
+            return false;
+        return true;
     }
 
     public bool GameEnded() // TODO: PASS
@@ -205,11 +207,11 @@ public class Othello
                 clone.Play(i);
 
                 children.Add(clone);
-                clone.Print();
-                System.Console.WriteLine("\n\n");
+                // clone.Print();
+                // System.Console.WriteLine("\n\n");
+                yield return clone;
             }
         }
-        return children;
     }
 
     public Othello Clone()

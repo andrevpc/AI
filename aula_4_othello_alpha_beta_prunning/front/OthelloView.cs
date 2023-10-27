@@ -15,7 +15,8 @@ public class OthelloView : View
 
     protected override void OnStart(IGraphics g)
     {
-        g.SubscribeKeyDownEvent(key => {
+        g.SubscribeKeyDownEvent(key =>
+        {
             if (key == Input.Escape)
                 App.Close();
         });
@@ -26,15 +27,23 @@ public class OthelloView : View
         if (passCount > 1)
             return;
 
-        if (game.WhitePlays)
-            get(m1, m2);
-        else get(m2, m1);
-        
+        try
+        {
+            if (game.WhitePlays)
+                get(m1, m2);
+            else get(m2, m1);
+
+        }
+        catch
+        {
+
+        }
+
         void get(string path, string other)
         {
             if (!File.Exists(path))
                 return;
-            
+
             var text = File.ReadAllText(path);
             if (text != "pass")
             {
@@ -57,7 +66,7 @@ public class OthelloView : View
 
             File.WriteAllText("[OUTPUT]" + other, this.game.ToString());
             Invalidate();
-        }   
+        }
     }
 
     protected override void OnRender(IGraphics g)
@@ -78,7 +87,7 @@ public class OthelloView : View
 
         g.Clear(Color.DarkRed);
         g.DrawText(
-            new RectangleF(0, 0, 150, 150), 
+            new RectangleF(0, 0, 150, 150),
             StringAlignment.Center, StringAlignment.Center,
             Brushes.White, "debugInfo:\n" + game.ToString());
 
@@ -92,11 +101,11 @@ public class OthelloView : View
             else winInfo = "Black Wins!";
         }
         g.DrawText(
-            new RectangleF(x0 + boardSize, 0, 150, 150), 
+            new RectangleF(x0 + boardSize, 0, 150, 150),
             StringAlignment.Center, StringAlignment.Center,
             Brushes.White, $"W {game.WhitePoints} x {game.BlackPoints} B\n{winInfo}");
         g.FillRectangle(
-            x - boardPadding, y - boardPadding, 
+            x - boardPadding, y - boardPadding,
             boardSize, boardSize,
             Brushes.DarkGreen
         );
@@ -106,7 +115,7 @@ public class OthelloView : View
             for (int j = 0; j < 8; j++)
             {
                 var piece = game[i, j];
-                g.FillRectangle(x, y, 
+                g.FillRectangle(x, y,
                     squareSize, squareSize,
                     Brushes.Green
                 );
@@ -119,7 +128,7 @@ public class OthelloView : View
                     {
                         pts.Add(new PointF(
                             x + squareSize / 2 + radius * MathF.Cos(theta),
-                            y + squareSize / 2 + radius * MathF.Sin(theta) 
+                            y + squareSize / 2 + radius * MathF.Sin(theta)
                         ));
                     }
 
@@ -127,7 +136,7 @@ public class OthelloView : View
                         piece == 1 ? Brushes.White : Brushes.Black
                     );
                 }
-                
+
                 x += squareSize + squareMargin;
             }
             x = x0;

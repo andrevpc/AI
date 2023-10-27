@@ -34,6 +34,8 @@ public static class Game
                 .Split(' ')
                 .Select(ulong.Parse)
                 .ToArray();
+
+            Thread.Sleep(1500);
             File.Delete($"[OUTPUT]{file}.txt");
 
             Tree.Expand(Deep);

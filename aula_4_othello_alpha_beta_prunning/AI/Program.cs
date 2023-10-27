@@ -4,7 +4,7 @@ Node tree = new()
 {
     State = new Othello()
 };
-int deep = 1;
+int deep = 6;
 tree.State = Othello.New();
 tree.Expand(deep);
 
