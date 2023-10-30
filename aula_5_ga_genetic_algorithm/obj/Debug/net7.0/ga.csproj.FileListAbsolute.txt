@@ -1,0 +1,15 @@
+C:\Users\sii5ct\Desktop\ga\bin\Debug\net7.0\ga.exe
+C:\Users\sii5ct\Desktop\ga\bin\Debug\net7.0\ga.deps.json
+C:\Users\sii5ct\Desktop\ga\bin\Debug\net7.0\ga.runtimeconfig.json
+C:\Users\sii5ct\Desktop\ga\bin\Debug\net7.0\ga.dll
+C:\Users\sii5ct\Desktop\ga\bin\Debug\net7.0\ga.pdb
+C:\Users\sii5ct\Desktop\ga\obj\Debug\net7.0\ga.csproj.AssemblyReference.cache
+C:\Users\sii5ct\Desktop\ga\obj\Debug\net7.0\ga.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sii5ct\Desktop\ga\obj\Debug\net7.0\ga.AssemblyInfoInputs.cache
+C:\Users\sii5ct\Desktop\ga\obj\Debug\net7.0\ga.AssemblyInfo.cs
+C:\Users\sii5ct\Desktop\ga\obj\Debug\net7.0\ga.csproj.CoreCompileInputs.cache
+C:\Users\sii5ct\Desktop\ga\obj\Debug\net7.0\ga.dll
+C:\Users\sii5ct\Desktop\ga\obj\Debug\net7.0\refint\ga.dll
+C:\Users\sii5ct\Desktop\ga\obj\Debug\net7.0\ga.pdb
+C:\Users\sii5ct\Desktop\ga\obj\Debug\net7.0\ga.genruntimeconfig.cache
+C:\Users\sii5ct\Desktop\ga\obj\Debug\net7.0\ref\ga.dll
