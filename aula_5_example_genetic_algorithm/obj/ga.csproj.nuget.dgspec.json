@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\disrct\\Desktop\\André\\AI\\aula_5_ga_genetic_algorithm\\ga.csproj": {}
+    "C:\\Users\\disrct\\Desktop\\André\\AI\\aula_5_example_genetic_algorithm\\ga.csproj": {}
   },
   "projects": {
-    "C:\\Users\\disrct\\Desktop\\André\\AI\\aula_5_ga_genetic_algorithm\\ga.csproj": {
+    "C:\\Users\\disrct\\Desktop\\André\\AI\\aula_5_example_genetic_algorithm\\ga.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\disrct\\Desktop\\André\\AI\\aula_5_ga_genetic_algorithm\\ga.csproj",
+        "projectUniqueName": "C:\\Users\\disrct\\Desktop\\André\\AI\\aula_5_example_genetic_algorithm\\ga.csproj",
         "projectName": "ga",
-        "projectPath": "C:\\Users\\disrct\\Desktop\\André\\AI\\aula_5_ga_genetic_algorithm\\ga.csproj",
+        "projectPath": "C:\\Users\\disrct\\Desktop\\André\\AI\\aula_5_example_genetic_algorithm\\ga.csproj",
         "packagesPath": "C:\\Users\\disrct\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\disrct\\Desktop\\André\\AI\\aula_5_ga_genetic_algorithm\\obj\\",
+        "outputPath": "C:\\Users\\disrct\\Desktop\\André\\AI\\aula_5_example_genetic_algorithm\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\disrct\\AppData\\Roaming\\NuGet\\NuGet.Config",
